@@ -31,12 +31,12 @@ def extract_toc(epub_file:zipfile.ZipFile):
         
         toc = {}
         
-        for itemref in spine_item.find_all("itemref"):
+        for itemref in spine_item.find_all("itemref"): # type: ignore
             item_id = itemref.get("idref")
             
             item = content_soup.find("item",id=item_id) if item_id != None else None
             
-            file = item.get("href") if item != None else None
+            file = item.get("href") if item != None else None # type: ignore
             
             if file == None:
                 raise Exception("The content.opf file has not a valid format")
@@ -75,7 +75,7 @@ def image_bytes_to_ascii(img_bytes: bytes, width: int = 70) -> str:
     new_h = max(1, int(aspect * width * 0.55))  # 0.55 corrige proporción terminal
 
     img = img.resize((width, new_h))
-    pixels = list(img.getdata())
+    pixels = list(img.getdata()) # type: ignore
 
     charset = " .:-=+*#%@"
     chars = [charset[p * (len(charset) - 1) // 255] for p in pixels]
